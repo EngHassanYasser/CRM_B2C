@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Lead_status extends Model
+{
+    public function leads()
+    {
+        return $this->hasMany(Lead::class, 'lead_status_id');
+    }
+}

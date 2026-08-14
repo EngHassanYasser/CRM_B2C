@@ -59,4 +59,29 @@ class User extends Authenticatable implements PasskeyUser
             ? Str::substr($initials, 0, 1).Str::substr($initials, -1)
             : $initials;
     }
+
+    public function leads()
+    {
+        return $this->hasMany(Lead::class, 'owner_id');
+    }
+
+    public function deals()
+    {
+        return $this->hasMany(Deal::class, 'owner_id');
+    }
+
+    public function assignedTasks()
+    {
+        return $this->hasMany(Task::class, 'assigned_to');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 }
