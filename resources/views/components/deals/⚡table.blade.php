@@ -12,7 +12,6 @@ new class extends Component
     <table class="min-w-full divide-y divide-slate-200">
         <livewire:deals.thead />
         <livewire:deals.tbody />
-
     </table>
 
 </div>

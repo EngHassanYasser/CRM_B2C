@@ -5,14 +5,11 @@ use Livewire\Attributes\Layout;
 
 new 
 #[Layout('components.layouts.⚡app')]
-
 class extends Component
 {
     //
 };
-
 ?>
-
 <div class="space-y-6">
     <livewire:deals.page-header />
     <livewire:deals.stats />

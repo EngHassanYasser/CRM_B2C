@@ -106,10 +106,10 @@ new class extends Component
 
                         {{-- Leads --}}
 
-                        <a href="{{ route('leads.index') }}" wire:navigate class="flex items-center gap-3
-                                   rounded-lg bg-indigo-50
-                                   px-3 py-2.5 text-sm
-                                   font-medium text-indigo-700">
+                        <a href="{{ route('leads.index') }}" wire:navigate class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+        {{ request()->routeIs('leads.*')
+            ? 'bg-indigo-50 text-indigo-700'
+            : 'text-slate-600 transition hover:bg-slate-50 hover:text-slate-900' }}">
 
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -123,12 +123,11 @@ new class extends Component
 
                         {{-- Deals --}}
 
-                        <a href="{{ route('deals.index') }}" wire:navigate class="mt-1 flex items-center gap-3
-                                   rounded-lg px-3 py-2.5
-                                   text-sm font-medium
-                                   text-slate-600
-                                   transition hover:bg-slate-50
-                                   hover:text-slate-900">
+                        {{-- Users --}}
+                        <a href="{{ route('deals.index') }}" wire:navigate class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+        {{ request()->routeIs('deals.*')
+            ? 'bg-indigo-50 text-indigo-700'
+            : 'text-slate-600 transition hover:bg-slate-50 hover:text-slate-900' }}">
 
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -142,12 +141,10 @@ new class extends Component
 
                         {{-- Activities --}}
 
-                        <a href="{{ route('activities.index') }}" wire:navigate class="mt-1 flex items-center gap-3
-                                   rounded-lg px-3 py-2.5
-                                   text-sm font-medium
-                                   text-slate-600
-                                   transition hover:bg-slate-50
-                                   hover:text-slate-900">
+                        <a href="{{ route('activities.index') }}" wire:navigate class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+        {{ request()->routeIs('activities.*')
+            ? 'bg-indigo-50 text-indigo-700'
+            : 'text-slate-600 transition hover:bg-slate-50 hover:text-slate-900' }}">
 
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -161,12 +158,10 @@ new class extends Component
 
                         {{-- Tasks --}}
 
-                        <a href="{{ route('tasks.index') }}" wire:navigate class="mt-1 flex items-center gap-3
-                                   rounded-lg px-3 py-2.5
-                                   text-sm font-medium
-                                   text-slate-600
-                                   transition hover:bg-slate-50
-                                   hover:text-slate-900">
+                        <a href="{{ route('tasks.index') }}" wire:navigate class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+        {{ request()->routeIs('tasks.*')
+            ? 'bg-indigo-50 text-indigo-700'
+            : 'text-slate-600 transition hover:bg-slate-50 hover:text-slate-900' }}">
 
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -192,13 +187,10 @@ new class extends Component
 
 
                         {{-- Users --}}
-
-                        <a href="#" class="flex items-center gap-3
-                                   rounded-lg px-3 py-2.5
-                                   text-sm font-medium
-                                   text-slate-600
-                                   transition hover:bg-slate-50
-                                   hover:text-slate-900">
+                        <a href="{{ route('users.index') }}" wire:navigate class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+        {{ request()->routeIs('users.*')
+            ? 'bg-indigo-50 text-indigo-700'
+            : 'text-slate-600 transition hover:bg-slate-50 hover:text-slate-900' }}">
 
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -212,12 +204,10 @@ new class extends Component
 
                         {{-- Settings --}}
 
-                        <a href="#" class="mt-1 flex items-center gap-3
-                                   rounded-lg px-3 py-2.5
-                                   text-sm font-medium
-                                   text-slate-600
-                                   transition hover:bg-slate-50
-                                   hover:text-slate-900">
+                        <a href="{{ route('erpsettings.index') }}" wire:navigate class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+        {{ request()->routeIs('erpsettings.*')
+            ? 'bg-indigo-50 text-indigo-700'
+            : 'text-slate-600 transition hover:bg-slate-50 hover:text-slate-900' }}">
 
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -227,7 +217,7 @@ new class extends Component
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
 
-                            Settings
+                         ERP Settings
 
                         </a>
 
