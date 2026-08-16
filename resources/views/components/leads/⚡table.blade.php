@@ -6,7 +6,7 @@ new class extends Component
 {
     //
 };
-?>
+?> 
 
 {{-- =========================
 TABLE
