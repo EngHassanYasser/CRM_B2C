@@ -32,13 +32,6 @@ TABLE
                                    text-xs font-semibold
                                    uppercase tracking-wider
                                    text-slate-500">
-                    Company
-                </th>
-
-                <th class="px-4 py-3 text-left
-                                   text-xs font-semibold
-                                   uppercase tracking-wider
-                                   text-slate-500">
                     Source
                 </th>
 
@@ -106,12 +99,6 @@ TABLE
                     </div>
 
                 </td>
-
-
-                <td class="px-4 py-4 text-sm text-slate-700">
-                    Acme Corporation
-                </td>
-
 
                 <td class="px-4 py-4 text-sm text-slate-600">
                     LinkedIn
@@ -205,12 +192,6 @@ TABLE
 
                 </td>
 
-
-                <td class="px-4 py-4 text-sm text-slate-700">
-                    Tech Solutions
-                </td>
-
-
                 <td class="px-4 py-4 text-sm text-slate-600">
                     Website
                 </td>
@@ -298,11 +279,6 @@ TABLE
 
                     </div>
 
-                </td>
-
-
-                <td class="px-4 py-4 text-sm text-slate-700">
-                    Digital Agency
                 </td>
 
 
