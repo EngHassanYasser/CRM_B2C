@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::livewire('/', 'pages.lead')->name('leads.index');
+Route::livewire('/', 'pages.dashboard')->name('dashboard.index');
+Route::livewire('/leads', 'pages.lead')->name('leads.index');
 Route::livewire('/erpsettings', 'pages.erpsettings')->name('erpsettings.index');
 Route::livewire('/users', 'pages.users')->name('users.index');
 Route::livewire('/activities', 'pages.activities')->name('activities.index');
