@@ -76,7 +76,7 @@ new class extends Component
 
                     {{-- Dashboard --}}
 
-                    <a href="#" class="flex items-center gap-3
+                    <a href="{{ route('dashboard.index') }}" wire:navigate class="flex items-center gap-3
                                rounded-lg px-3 py-2.5
                                text-sm font-medium
                                text-slate-600
