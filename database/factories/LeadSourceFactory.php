@@ -1,0 +1,23 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\LeadSource;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<LeadSource>
+ */
+class LeadSourceFactory extends Factory
+{
+    protected $model = LeadSource::class;
+
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->unique()->word(),
+
+            'is_active' => true,
+        ];
+    }
+}

@@ -1,19 +1,30 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
-
+#[Fillable([
+    'first_name',
+    'last_name',
+    'email',
+    'phone',
+    'lead_source_id',
+    'lead_status_id',
+    'owner_id',
+    'score',
+])]
 class Lead extends Model
 {
+    use HasFactory;
     public function source()
     {
-        return $this->belongsTo(Lead_source::class, 'lead_source_id');
+        return $this->belongsTo(LeadSource::class, 'lead_source_id');
     }
 
     public function status()
     {
-        return $this->belongsTo(Lead_status::class, 'lead_status_id');
+        return $this->belongsTo(LeadStatus::class, 'lead_status_id');
     }
 
     public function owner()

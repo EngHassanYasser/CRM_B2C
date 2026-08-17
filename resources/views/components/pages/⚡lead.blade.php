@@ -1,13 +1,12 @@
 <?php
-
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 new
 #[Layout('components.layouts.⚡app')]
 class extends Component
 {
-    //
+   
 };
 ?>
 <div x-data="{
@@ -22,6 +21,6 @@ class extends Component
         <livewire:leads.toolbar />
         <livewire:leads.table />
         <livewire:leads.pagination />
-        <livewire:leads.model />
+        <livewire:leads.model/>
     </div>
 </div>

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Deal extends Model
 {
+    use HasFactory;
     public function lead()
     {
         return $this->belongsTo(Lead::class);
@@ -18,12 +20,12 @@ class Deal extends Model
 
     public function pipeline()
     {
-        return $this->belongsTo(Pipline::class);
+        return $this->belongsTo(Pipeline::class);
     }
 
     public function stage()
     {
-        return $this->belongsTo(Pipline_stage::class, 'pipeline_stage_id');
+        return $this->belongsTo(PipelineStage::class, 'pipeline_stage_id');
     }
 
     public function activities()

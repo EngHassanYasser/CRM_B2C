@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pipline_stage extends Model
+class PipelineStage extends Model
 {
+    use HasFactory;
+
     public function pipeline()
     {
-        return $this->belongsTo(Pipline::class);
+        return $this->belongsTo(Pipeline::class);
     }
 
     public function deals()

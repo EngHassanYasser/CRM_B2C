@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class lead_source extends Model
+class LeadSource extends Model
 {
+    use HasFactory;
+    public $timestamps=false;
     public function leads()
     {
         return $this->hasMany(Lead::class, 'lead_source_id');
