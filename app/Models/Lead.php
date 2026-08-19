@@ -17,14 +17,14 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     use HasFactory;
-    public function source()
+    public function lead_source()
     {
-        return $this->belongsTo(LeadSource::class, 'lead_source_id');
+        return $this->belongsTo(LeadSource::class);
     }
 
-    public function status()
+    public function lead_status()
     {
-        return $this->belongsTo(LeadStatus::class, 'lead_status_id');
+        return $this->belongsTo(LeadStatus::class);
     }
 
     public function owner()
@@ -51,4 +51,10 @@ class Lead extends Model
     {
         return $this->morphMany(Note::class, 'notable');
     }
+
+   public function latestActivity()
+    {
+
+    return $this->morphOne(Activity::class, 'activityable')
+        ->latestOfMany('created_at');    }
 }

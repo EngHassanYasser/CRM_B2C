@@ -1,344 +1,137 @@
 <?php
 
+use App\Services\Lead\LeadQueryService;
 use Livewire\Component;
+use Livewire\WithPagination;
 
-new class extends Component
-{
-    //
+new class extends Component {
+    use WithPagination;
+
+    public function render(LeadQueryService $leadQueryService)
+    {
+        return $this->view([
+            'leads' => $leadQueryService->getLeads(),
+        ]);
+    }
 };
-?> 
-
-{{-- =========================
-TABLE
-========================== --}}
+?>
 
 <div class="overflow-x-auto">
 
-    <table class="min-w-full divide-y
-                          divide-slate-200">
+    <table class="min-w-full divide-y divide-slate-200">
 
         <thead class="bg-slate-50">
-
             <tr>
-
-                <th class="px-4 py-3 text-left
-                                   text-xs font-semibold
-                                   uppercase tracking-wider
-                                   text-slate-500">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                     Lead
                 </th>
 
-                <th class="px-4 py-3 text-left
-                                   text-xs font-semibold
-                                   uppercase tracking-wider
-                                   text-slate-500">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                     Source
                 </th>
 
-                <th class="px-4 py-3 text-left
-                                   text-xs font-semibold
-                                   uppercase tracking-wider
-                                   text-slate-500">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                     Status
                 </th>
 
-                <th class="px-4 py-3 text-left
-                                   text-xs font-semibold
-                                   uppercase tracking-wider
-                                   text-slate-500">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                     Owner
                 </th>
 
-                <th class="px-4 py-3 text-left
-                                   text-xs font-semibold
-                                   uppercase tracking-wider
-                                   text-slate-500">
+                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                     Last Activity
                 </th>
 
                 <th class="px-4 py-3"></th>
-
             </tr>
-
         </thead>
-
 
         <tbody class="divide-y divide-slate-100">
 
+            @foreach ($leads as $lead)
+                <tr class="transition hover:bg-slate-50">
 
-            {{-- Lead --}}
-            <tr class="transition hover:bg-slate-50">
+                    <td class="px-4 py-4">
+                        <div class="flex items-center gap-3">
 
-                <td class="px-4 py-4">
+                            <div
+                                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
+                                {{ strtoupper(substr($lead->first_name, 0, 1) . substr($lead->last_name, 0, 1)) }}
+                            </div>
 
-                    <div class="flex items-center gap-3">
+                            <div>
+                                <p class="text-sm font-semibold text-slate-900">
+                                    {{ $lead->first_name }} {{ $lead->last_name }}
+                                </p>
 
-                        <div class="flex h-9 w-9 shrink-0
-                                           items-center justify-center
-                                           rounded-full
-                                           bg-indigo-100
-                                           text-xs font-bold
-                                           text-indigo-700">
-                            JS
-                        </div>
-
-
-                        <div>
-
-                            <p class="text-sm font-semibold
-                                               text-slate-900">
-                                John Smith
-                            </p>
-
-                            <p class="text-xs text-slate-500">
-                                john@example.com
-                            </p>
+                                <p class="text-xs text-slate-500">
+                                    {{ $lead->email }}
+                                </p>
+                            </div>
 
                         </div>
+                    </td>
 
-                    </div>
+                    <td class="px-4 py-4 text-sm text-slate-600">
+                        {{ $lead->lead_source?->name ?? '—' }}
+                    </td>
 
-                </td>
-
-                <td class="px-4 py-4 text-sm text-slate-600">
-                    LinkedIn
-                </td>
-
-
-                <td class="px-4 py-4">
-
-                    <span class="inline-flex rounded-full
-                                       bg-blue-50 px-2.5 py-1
-                                       text-xs font-medium
-                                       text-blue-700">
-                        New
-                    </span>
-
-                </td>
-
-
-                <td class="px-4 py-4">
-
-                    <div class="flex items-center gap-2">
-
-                        <div class="flex h-7 w-7
-                                           items-center justify-center
-                                           rounded-full
-                                           bg-indigo-100
-                                           text-[10px] font-bold
-                                           text-indigo-700">
-                            HS
-                        </div>
-
-                        <span class="text-sm text-slate-600">
-                            Hassan
+                    <td class="px-4 py-4">
+                        <span class="inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
+                            {{ $lead->lead_status?->name ?? '—' }}
                         </span>
+                    </td>
 
-                    </div>
+                    <td class="px-4 py-4">
+                        <div class="flex items-center gap-2">
 
-                </td>
+                            <div
+                                class="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-700">
+                                {{ strtoupper(substr($lead->owner?->name ?? '', 0, 2)) }}
+                            </div>
 
-
-                <td class="px-4 py-4 text-sm text-slate-500">
-                    2 hours ago
-                </td>
-
-
-                <td class="px-4 py-4 text-right">
-
-                    <button type="button" class="rounded-lg p-2
-                                       text-slate-400
-                                       hover:bg-slate-100">
-                        •••
-                    </button>
-
-                </td>
-
-            </tr>
-
-
-            {{-- Lead --}}
-            <tr class="transition hover:bg-slate-50">
-
-                <td class="px-4 py-4">
-
-                    <div class="flex items-center gap-3">
-
-                        <div class="flex h-9 w-9
-                                           shrink-0 items-center
-                                           justify-center
-                                           rounded-full
-                                           bg-emerald-100
-                                           text-xs font-bold
-                                           text-emerald-700">
-                            SJ
-                        </div>
-
-
-                        <div>
-
-                            <p class="text-sm font-semibold
-                                               text-slate-900">
-                                Sarah Johnson
-                            </p>
-
-                            <p class="text-xs text-slate-500">
-                                sarah@example.com
-                            </p>
+                            <span class="text-sm text-slate-600">
+                                {{ $lead->owner?->name ?? '—' }}
+                            </span>
 
                         </div>
+                    </td>
 
-                    </div>
+                    <td class="px-4 py-4 text-sm text-slate-500">
+                        {{ $lead->latestActivity?->created_at?->diffForHumans() ?? '—' }}
+                    </td>
 
-                </td>
+                    <td class="px-4 py-4 text-right">
+                        <div x-data="{ open: false }" class="relative inline-block text-left">
+                            <button type="button" @click="open = !open" @click.outside="open = false"
+                                class="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600">
+                                •••
+                            </button>
 
-                <td class="px-4 py-4 text-sm text-slate-600">
-                    Website
-                </td>
+                            <div x-show="open" x-transition
+                                class="absolute right-0 z-50 mt-2 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 text-right shadow-lg">
+                                <button type="button"
+                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                                    تعديل
+                                </button>
 
+                                <button type="button"
+                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                                    عرض
+                                </button>
 
-                <td class="px-4 py-4">
-
-                    <span class="inline-flex rounded-full
-                                       bg-amber-50 px-2.5 py-1
-                                       text-xs font-medium
-                                       text-amber-700">
-                        Contacted
-                    </span>
-
-                </td>
-
-
-                <td class="px-4 py-4">
-
-                    <div class="flex items-center gap-2">
-
-                        <div class="flex h-7 w-7
-                                           items-center justify-center
-                                           rounded-full bg-blue-100
-                                           text-[10px] font-bold
-                                           text-blue-700">
-                            AH
+                                <button type="button"
+                                    class="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                                    حذف
+                                </button>
+                            </div>
                         </div>
-
-                        <span class="text-sm text-slate-600">
-                            Ahmed
-                        </span>
-
-                    </div>
-
-                </td>
-
-
-                <td class="px-4 py-4 text-sm text-slate-500">
-                    Yesterday
-                </td>
-
-
-                <td class="px-4 py-4 text-right">
-
-                    <button type="button" class="rounded-lg p-2
-                                       text-slate-400
-                                       hover:bg-slate-100">
-                        •••
-                    </button>
-
-                </td>
-
-            </tr>
-
-
-            {{-- Lead --}}
-            <tr class="transition hover:bg-slate-50">
-
-                <td class="px-4 py-4">
-
-                    <div class="flex items-center gap-3">
-
-                        <div class="flex h-9 w-9 shrink-0
-                                           items-center justify-center
-                                           rounded-full bg-violet-100
-                                           text-xs font-bold
-                                           text-violet-700">
-                            MK
-                        </div>
-
-
-                        <div>
-
-                            <p class="text-sm font-semibold
-                                               text-slate-900">
-                                Michael King
-                            </p>
-
-                            <p class="text-xs text-slate-500">
-                                michael@example.com
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </td>
-
-
-                <td class="px-4 py-4 text-sm text-slate-600">
-                    Referral
-                </td>
-
-
-                <td class="px-4 py-4">
-
-                    <span class="inline-flex rounded-full
-                                       bg-emerald-50 px-2.5 py-1
-                                       text-xs font-medium
-                                       text-emerald-700">
-                        Qualified
-                    </span>
-
-                </td>
-
-
-                <td class="px-4 py-4">
-
-                    <div class="flex items-center gap-2">
-
-                        <div class="flex h-7 w-7
-                                           items-center justify-center
-                                           rounded-full bg-indigo-100
-                                           text-[10px] font-bold
-                                           text-indigo-700">
-                            HS
-                        </div>
-
-                        <span class="text-sm text-slate-600">
-                            Hassan
-                        </span>
-
-                    </div>
-
-                </td>
-
-
-                <td class="px-4 py-4 text-sm text-slate-500">
-                    3 days ago
-                </td>
-
-
-                <td class="px-4 py-4 text-right">
-
-                    <button type="button" class="rounded-lg p-2
-                                       text-slate-400
-                                       hover:bg-slate-100">
-                        •••
-                    </button>
-
-                </td>
-
-            </tr>
+                    </td>
+                </tr>
+            @endforeach
 
         </tbody>
 
     </table>
-
+    <x-leads.table.pagination :$leads />
 </div>

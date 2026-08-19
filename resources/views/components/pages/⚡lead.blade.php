@@ -20,7 +20,6 @@ class extends Component
                bg-white shadow-sm">
         <livewire:leads.toolbar />
         <livewire:leads.table />
-        <livewire:leads.pagination />
         <livewire:leads.model/>
     </div>
 </div>

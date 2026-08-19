@@ -5,6 +5,7 @@ namespace App\Services\Lead;
 use App\Models\Lead;
 use App\Models\LeadSource;
 use App\Models\LeadStatus;
+use Illuminate\Support\Facades\DB;
 
 class LeadQueryService
 {
@@ -61,4 +62,31 @@ public function getStats()
         'conversion_rate' => $conversionRate,
     ];
 }
+
+public function getLeads() {
+
+    return Lead::select([
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'lead_source_id',
+        'lead_status_id',
+        'owner_id',
+    ])
+    ->with([
+        'lead_source:id,name',
+        'lead_status:id,name',
+        'owner:id,name',
+        'latestActivity' => function ($query) {
+            $query->select([
+                'activities.id',
+                'activities.activityable_id',
+                'activities.activityable_type',
+                'activities.created_at',
+            ]);
+        },
+    ])->paginate(5);
+ }
 }
