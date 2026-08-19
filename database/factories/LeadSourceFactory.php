@@ -12,12 +12,21 @@ class LeadSourceFactory extends Factory
 {
     protected $model = LeadSource::class;
 
-    public function definition(): array
-    {
-        return [
-            'name' => fake()->unique()->word(),
+   public function definition(): array
+{
+    return [
+        'name' => fake()->unique()->randomElement([
+            'Cold Call',
+            'Website',
+            'Advertisement',
+            'Facebook',
+            'Email',
+            'Other',
+            'Referral',
+            'LinkedIn',
+        ]),
 
-            'is_active' => true,
-        ];
-    }
+        'is_active' => true,
+    ];
+}
 }

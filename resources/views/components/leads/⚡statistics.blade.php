@@ -1,10 +1,20 @@
 <?php
 
+use App\Services\Lead\LeadQueryService;
 use Livewire\Component;
-
+use Livewire\Attributes\On;
 new class extends Component
 {
-    //
+  public $stats = [];
+    public function mount(LeadQueryService $leadQueryService): void {
+        $this->stats = $leadQueryService->getStats();
+    }
+
+   #[On('lead-created')]
+    public function refreshStats(LeadQueryService $leadQueryService): void
+    {
+        $this->stats = $leadQueryService->getStats();
+    }
 };
 ?>
 {{-- =========================
@@ -27,13 +37,8 @@ STATISTICS
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    128
+                 {{  $stats['total'] }}
                 </p>
-
-                <p class="mt-2 text-xs text-emerald-600">
-                    +12.5% from last month
-                </p>
-
             </div>
 
 
@@ -62,13 +67,8 @@ STATISTICS
         </p>
 
         <p class="mt-2 text-2xl font-bold text-slate-900">
-            32
+           {{ $stats['new'] }}
         </p>
-
-        <p class="mt-2 text-xs text-blue-600">
-            25% of total leads
-        </p>
-
     </div>
 
 
@@ -81,11 +81,7 @@ STATISTICS
         </p>
 
         <p class="mt-2 text-2xl font-bold text-slate-900">
-            18
-        </p>
-
-        <p class="mt-2 text-xs text-emerald-600">
-            56.3% of new leads
+           {{ $stats['qualified'] }}
         </p>
 
     </div>
@@ -100,11 +96,7 @@ STATISTICS
         </p>
 
         <p class="mt-2 text-2xl font-bold text-slate-900">
-            18.7%
-        </p>
-
-        <p class="mt-2 text-xs text-emerald-600">
-            +2.4% from last month
+            {{$stats['conversion_rate']}}%
         </p>
 
     </div>

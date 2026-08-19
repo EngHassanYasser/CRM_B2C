@@ -14,11 +14,38 @@ class LeadStatusFactory extends Factory
 
     public function definition(): array
     {
-        return [
-            'name' => fake()->unique()->words(2, true),
+        $statuses = [
+            [
+                'name' => 'Contacted',
+                'source_order' => 88,
+            ],
+            [
+                'name' => 'Unqualified',
+                'source_order' => 81,
+            ],
+            [
+                'name' => 'Qualified',
+                'source_order' => 77,
+            ],
+            [
+                'name' => 'New',
+                'source_order' => 32,
+            ],
+            [
+                'name' => 'Converted',
+                'source_order' => 34,
+            ],
+            [
+                'name' => 'Working',
+                'source_order' => 37,
+            ],
+            [
+                'name' => 'Lost',
+                'source_order' => 7,
+            ],
+        ];
 
-            'source_order' => fake()->unique()->numberBetween(1, 100),
-
+        return fake()->unique()->randomElement($statuses) + [
             'is_active' => true,
         ];
     }

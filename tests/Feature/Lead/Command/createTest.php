@@ -51,11 +51,16 @@ it('creates a lead successfully', function () {
 
 it('throws an exception when email already exists', function () {
     $owner = User::factory()->create();
+    $status = LeadStatus::factory()->create();
+    $source=LeadSource::factory()->create();
 
     $data = validLeadData();
 
     Lead::factory()->create([
         'email' => $data['email'],
+        'lead_source_id'=>$source->id,
+        'lead_status_id'=>$status->id,
+        'owner_id'=>$owner->id
     ]);
 
     expect(fn () =>
@@ -64,12 +69,17 @@ it('throws an exception when email already exists', function () {
 });
 
 it('throws an exception when phone already exists', function () {
+    $source = LeadSource::factory()->create();
+    $status=LeadStatus::factory()->create();
     $owner = User::factory()->create();
 
     $data = validLeadData();
 
     Lead::factory()->create([
         'phone' => $data['phone'],
+        'lead_source_id'=>$source->id,
+        'lead_status_id'=>$status->id,
+        'owner_id'=>$owner->id
     ]);
 
     expect(fn () =>
@@ -79,12 +89,16 @@ it('throws an exception when phone already exists', function () {
 
 it('throws an exception when email and phone already exist', function () {
     $owner = User::factory()->create();
-
+    $source = LeadSource::factory()->create();
+    $status=LeadStatus::factory()->create();
     $data = validLeadData();
 
     Lead::factory()->create([
         'email' => $data['email'],
         'phone' => $data['phone'],
+        'owner_id'=>$owner->id,
+        'lead_source_id'=>$source->id,
+        'lead_status_id'=>$status->id,
     ]);
 
     expect(fn () =>
@@ -121,8 +135,13 @@ it('allows creating a lead when only email exists and phone is null', function (
     $data['phone'] = null;
 
     Lead::factory()->create([
+        'first_name'=>'first name',
+        'last_name'=>'last name',
         'email' => 'existing@example.com',
         'phone' => '01111111111',
+        'lead_status_id'=>1,
+        'lead_source_id'=>1,
+        'owner_id'=>$owner->id,
     ]);
 
     $lead = app(LeadCommandService::class)
