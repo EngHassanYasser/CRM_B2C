@@ -12,7 +12,11 @@ class extends Component
 <div x-data="{
             filterOpen: false,
             model:false,
+<<<<<<< Updated upstream
             viewMode:false
+=======
+            mode :'add',
+>>>>>>> Stashed changes
         }">
     <livewire:leads.page-header />
     <livewire:leads.statistics />

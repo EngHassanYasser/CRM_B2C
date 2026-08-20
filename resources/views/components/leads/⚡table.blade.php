@@ -4,16 +4,21 @@ use App\Services\Lead\LeadCommandService;
 use App\Services\Lead\LeadQueryService;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\On;
 
 new class extends Component {
     use WithPagination;
 
+    #[On('lead-created')]
+    #[On('lead-deleted')]
+    #[On('lead-updated')]
     public function render(LeadQueryService $leadQueryService)
     {
         return $this->view([
             'leads' => $leadQueryService->getLeads(),
         ]);
     }
+<<<<<<< Updated upstream
     public function deleteLead(
         LeadCommandService $leadCommandService,
         int $leadId
@@ -21,6 +26,13 @@ new class extends Component {
         $leadCommandService->deleteById($leadId);
     }
     
+=======
+    public function deleteLead(LeadCommandService $leadCommandService, int $leadId): void
+    {
+        $leadCommandService->deleteById($leadId);
+        $this->dispatch('lead-deleted');
+    }
+>>>>>>> Stashed changes
 };
 ?>
 
@@ -118,6 +130,7 @@ new class extends Component {
 
                             <div x-show="open" x-transition
                                 class="absolute right-0 z-50 mt-2 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 text-right shadow-lg">
+<<<<<<< Updated upstream
 
                                 <button type="button" @click="model=open;mode='view'"
                                     wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
@@ -134,6 +147,22 @@ new class extends Component {
 
                                 <button type="button"
                                     wire:click="deleteLead({{ $lead->id }})"
+=======
+
+                                <button type="button" @click="mode='view';model=open"
+                                    wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
+                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                                    عرض
+                                </button>
+
+                                <button type="button" @click="mode='edit';model=open"
+                                    wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
+                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                                    تعديل
+                                </button>
+
+                                <button type="button" wire:click="deleteLead({{ $lead->id }})"
+>>>>>>> Stashed changes
                                     class="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
                                     حذف
                                 </button>

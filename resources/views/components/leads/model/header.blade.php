@@ -1,12 +1,14 @@
 <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
 
     <div>
-        <h2 class="text-base font-semibold text-slate-900">
-            Create Lead
+        <h2 
+        x-text="mode == 'add' ? 'Create Lead' : 'Update Lead' "
+        class="text-base font-semibold text-slate-900">
         </h2>
 
-        <p class="mt-1 text-xs text-slate-500">
-            Add a new lead.
+        <p 
+                x-text="mode == 'add' ? 'add a new lead' : 'edite existing lead' "
+        class="mt-1 text-xs text-slate-500">
         </p>
     </div>
 
