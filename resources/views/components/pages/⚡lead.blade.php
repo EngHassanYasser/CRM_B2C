@@ -19,7 +19,6 @@ class extends Component
     <div class="overflow-hidden rounded-xl
                border border-slate-200
                bg-white shadow-sm">
-        <livewire:leads.toolbar />
         <livewire:leads.table />
         <livewire:leads.model/>
     </div>

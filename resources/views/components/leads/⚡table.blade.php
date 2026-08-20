@@ -9,13 +9,35 @@ use Livewire\Attributes\On;
 new class extends Component {
     use WithPagination;
 
+    public $sources;
+    public $statuses;
+    public $owners;
+    public string $search = '';
+
+    public ?int $statusId = null;
+
+    public ?int $sourceId = null;
+
+    public ?int $ownerId = null;
+
+    public ?string $createdFrom = null;
+
+    public ?string $createdTo = null;
+
     #[On('lead-created')]
     #[On('lead-deleted')]
     #[On('lead-updated')]
-    public function render(LeadQueryService $leadQueryService)
+   public function render(LeadQueryService $leadQueryService)
     {
         return $this->view([
-            'leads' => $leadQueryService->getLeads(),
+            'leads' => $leadQueryService->getLeads(
+                search: $this->search,
+                statusId: $this->statusId,
+                sourceId: $this->sourceId,
+                ownerId: $this->ownerId,
+                createdFrom: $this->createdFrom,
+                createdTo: $this->createdTo,
+            ),
         ]);
     }
     public function deleteLead(LeadCommandService $leadCommandService, int $leadId): void
@@ -23,128 +45,22 @@ new class extends Component {
         $leadCommandService->deleteById($leadId);
         $this->dispatch('lead-deleted');
     }
+    public function mount(LeadQueryService $leadQueryService)
+    {
+        $this->sources = $leadQueryService->getSources();
+        $this->statuses = $leadQueryService->getStatuses();
+        $this->owners = $leadQueryService->getOwners();
+    }
 };
 ?>
+<div>
+    <x-leads.table.filter :$sources :$statuses :$owners />
 
-<div class="overflow-x-auto">
-
-    <table class="min-w-full divide-y divide-slate-200">
-
-        <thead class="bg-slate-50">
-            <tr>
-                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Lead
-                </th>
-
-                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Source
-                </th>
-
-                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Status
-                </th>
-
-                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Owner
-                </th>
-
-                <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Last Activity
-                </th>
-
-                <th class="px-4 py-3"></th>
-            </tr>
-        </thead>
-
-        <tbody class="divide-y divide-slate-100">
-
-            @foreach ($leads as $lead)
-                <tr class="transition hover:bg-slate-50">
-
-                    <td class="px-4 py-4">
-                        <div class="flex items-center gap-3">
-
-                            <div
-                                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
-                                {{ strtoupper(substr($lead->first_name, 0, 1) . substr($lead->last_name, 0, 1)) }}
-                            </div>
-
-                            <div>
-                                <p class="text-sm font-semibold text-slate-900">
-                                    {{ $lead->first_name }} {{ $lead->last_name }}
-                                </p>
-
-                                <p class="text-xs text-slate-500">
-                                    {{ $lead->email }}
-                                </p>
-                            </div>
-
-                        </div>
-                    </td>
-
-                    <td class="px-4 py-4 text-sm text-slate-600">
-                        {{ $lead->lead_source?->name ?? '—' }}
-                    </td>
-
-                    <td class="px-4 py-4">
-                        <span class="inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
-                            {{ $lead->lead_status?->name ?? '—' }}
-                        </span>
-                    </td>
-
-                    <td class="px-4 py-4">
-                        <div class="flex items-center gap-2">
-
-                            <div
-                                class="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-700">
-                                {{ strtoupper(substr($lead->owner?->name ?? '', 0, 2)) }}
-                            </div>
-
-                            <span class="text-sm text-slate-600">
-                                {{ $lead->owner?->name ?? '—' }}
-                            </span>
-
-                        </div>
-                    </td>
-
-                    <td class="px-4 py-4 text-sm text-slate-500">
-                        {{ $lead->latestActivity?->created_at?->diffForHumans() ?? '—' }}
-                    </td>
-
-                    <td class="px-4 py-4 text-right">
-                        <div x-data="{ open: false }" class="relative inline-block text-left">
-                            <button type="button" @click="open = !open" @click.outside="open = false"
-                                class="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600">
-                                •••
-                            </button>
-
-                            <div x-show="open" x-transition
-                                class="absolute right-0 z-50 mt-2 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 text-right shadow-lg">
-
-                                <button type="button" @click="mode='view';model=open"
-                                    wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
-                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
-                                    عرض
-                                </button>
-
-                                <button type="button" @click="mode='edit';model=open"
-                                    wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
-                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
-                                    تعديل
-                                </button>
-
-                                <button type="button" wire:click="deleteLead({{ $lead->id }})"
-                                    class="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                                    حذف
-                                </button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-
-        </tbody>
-
-    </table>
-    <x-leads.table.pagination :$leads />
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+            <x-leads.table.thead/>
+            <x-leads.table.tbody :$leads/>
+        </table>
+        <x-leads.table.pagination :$leads />
+    </div>
 </div>

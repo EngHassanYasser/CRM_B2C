@@ -1,16 +1,8 @@
-<?php
-
-use Livewire\Component;
-
-new class extends Component
-{
-    //
-};
-?>
 {{-- Toolbar --}}
 <div class="border-b border-slate-200 p-4 sm:p-5">
 
-    <div class="flex flex-col gap-4
+    <div
+        class="flex flex-col gap-4
                        xl:flex-row xl:items-center
                        xl:justify-between">
 
@@ -19,13 +11,13 @@ new class extends Component
 
             <svg class="absolute left-3 top-1/2
                                h-4 w-4 -translate-y-1/2
-                               text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                               text-slate-400"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 21l-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0z" />
             </svg>
-
-
-            <input type="text" placeholder="Search leads..." class="h-10 w-full rounded-lg
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search leads..."
+                class="h-10 w-full rounded-lg
                                border border-slate-200
                                pl-10 pr-4 text-sm
                                outline-none
@@ -33,13 +25,15 @@ new class extends Component
                                focus:ring-2
                                focus:ring-indigo-100">
 
+
         </div>
 
 
         {{-- Filters --}}
         <div class="flex flex-wrap items-center gap-2">
 
-            <button type="button" @click="filterOpen = !filterOpen" class="inline-flex h-10
+            <button type="button" @click="filterOpen = !filterOpen"
+                class="inline-flex h-10
                                items-center gap-2
                                rounded-lg border
                                border-slate-200
@@ -56,64 +50,35 @@ new class extends Component
 
             </button>
 
-
-            <select class="h-10 rounded-lg
+            <select wire:model.live="statusId"
+                class="h-10 rounded-lg
                                border border-slate-200
                                bg-white px-3
                                text-sm text-slate-600
                                outline-none">
+                <option value="">All Statuses</option>
 
-                <option>
-                    All Statuses
-                </option>
-
-                <option>
-                    New
-                </option>
-
-                <option>
-                    Contacted
-                </option>
-
-                <option>
-                    Qualified
-                </option>
-
-                <option>
-                    Converted
-                </option>
-
+                @foreach ($statuses as $status)
+                    <option value="{{ $status->id }}">
+                        {{ $status->name }}
+                    </option>
+                @endforeach
             </select>
 
-
-            <select class="h-10 rounded-lg
+            <select wire:model.live="sourceId"
+                class="h-10 rounded-lg
                                border border-slate-200
                                bg-white px-3
                                text-sm text-slate-600
                                outline-none">
+                <option value="">All Sources</option>
 
-                <option>
-                    All Sources
-                </option>
-
-                <option>
-                    Website
-                </option>
-
-                <option>
-                    LinkedIn
-                </option>
-
-                <option>
-                    Facebook
-                </option>
-
-                <option>
-                    Referral
-                </option>
-
+                @foreach ($sources as $source)
+                    <option value="{{ $source->id }}">
+                        {{ $source->name }}
+                    </option>
+                @endforeach
             </select>
-
         </div>
 
     </div>
@@ -133,7 +98,8 @@ new class extends Component
                     Created From
                 </label>
 
-                <input type="date" class="h-10 w-full rounded-lg
+                <input type="date" wire:model.live="createdFrom"
+                    class="h-10 w-full rounded-lg
                                    border border-slate-200
                                    px-3 text-sm outline-none">
 
@@ -147,7 +113,8 @@ new class extends Component
                     Created To
                 </label>
 
-                <input type="date" class="h-10 w-full rounded-lg
+                <input type="date" wire:model.live="createdTo"
+                    class="h-10 w-full rounded-lg
                                    border border-slate-200
                                    px-3 text-sm outline-none">
 
@@ -156,28 +123,23 @@ new class extends Component
 
             <div>
 
+
                 <label class="mb-1.5 block text-xs
                                    font-medium text-slate-600">
                     Owner
                 </label>
-
-                <select class="h-10 w-full rounded-lg
+                <select wire:model.live="ownerId"
+                    class="h-10 w-full rounded-lg
                                    border border-slate-200
                                    bg-white px-3
                                    text-sm outline-none">
+                    <option value="">All Owners</option>
 
-                    <option>
-                        All Owners
-                    </option>
-
-                    <option>
-                        Hassan
-                    </option>
-
-                    <option>
-                        Ahmed
-                    </option>
-
+                    @foreach ($owners as $owner)
+                        <option value="{{ $owner->id }}">
+                            {{ $owner->name }}
+                        </option>
+                    @endforeach
                 </select>
 
             </div>
