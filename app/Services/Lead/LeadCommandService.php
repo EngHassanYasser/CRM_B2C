@@ -46,4 +46,10 @@ class LeadCommandService
     public function qualifyLead() {}
 
     public function updateLead() {}
+    public function deleteById(int $id): bool
+    {
+        $lead = Lead::findOrFail($id);
+
+        return $lead->delete();
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\Lead\LeadCommandService;
 use App\Services\Lead\LeadQueryService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,6 +14,13 @@ new class extends Component {
             'leads' => $leadQueryService->getLeads(),
         ]);
     }
+    public function deleteLead(
+        LeadCommandService $leadCommandService,
+        int $leadId
+    ): void {
+        $leadCommandService->deleteById($leadId);
+    }
+    
 };
 ?>
 
@@ -110,17 +118,22 @@ new class extends Component {
 
                             <div x-show="open" x-transition
                                 class="absolute right-0 z-50 mt-2 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 text-right shadow-lg">
-                                <button type="button"
+
+                                <button type="button" @click="model=open;mode='view'"
+                                    wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
+
+                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                                    عرض
+                                </button>
+
+                                <button type="button" @click="model=open;mode='edit'" 
+                                  wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
                                     class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                                     تعديل
                                 </button>
 
                                 <button type="button"
-                                    class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
-                                    عرض
-                                </button>
-
-                                <button type="button"
+                                    wire:click="deleteLead({{ $lead->id }})"
                                     class="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
                                     حذف
                                 </button>

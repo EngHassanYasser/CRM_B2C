@@ -11,11 +11,17 @@
         Lead Source
     </label>
 
+    {{-- Selected source button --}}
     <button
         type="button"
+        :disabled="mode == 'view' "
         @click="open = !open"
         class="flex h-10 w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-3 text-left text-sm outline-none transition
-               focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+               focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100
+               disabled:cursor-not-allowed
+               disabled:bg-slate-100
+               disabled:text-slate-400
+               disabled:border-slate-200"
     >
         <span
             x-text="
@@ -23,7 +29,9 @@
                     source => String(source.id) === String(selectedSource)
                 )?.name ?? 'Select source'
             "
-            :class="selectedSource ? 'text-slate-700' : 'text-slate-400'"
+            :class="selectedSource
+                ? 'text-slate-700'
+                : 'text-slate-400'"
         ></span>
 
         <svg
@@ -42,8 +50,9 @@
         </svg>
     </button>
 
+    {{-- Dropdown --}}
     <div
-        x-show="open"
+        x-show="open && !viewMode"
         x-cloak
         x-transition
         class="absolute left-0 right-0 top-full z-50 mt-1 max-h-56 overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-lg"
@@ -64,8 +73,14 @@
         @foreach ($sources as $source)
             <button
                 type="button"
+                :disabled="viewMode"
                 @click="selectedSource = {{ $source->id }}; open = false"
-                class="flex w-full items-center px-3 py-2 text-left text-sm hover:bg-slate-50"
+                class="flex w-full items-center px-3 py-2 text-left text-sm
+                       hover:bg-slate-50
+                       disabled:cursor-not-allowed
+                       disabled:bg-slate-100
+                       disabled:text-slate-400
+                       disabled:border-slate-200"
                 :class="String(selectedSource) === String({{ $source->id }})
                     ? 'bg-indigo-50 text-indigo-600'
                     : 'text-slate-700'"

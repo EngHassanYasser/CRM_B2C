@@ -1,11 +1,13 @@
 <?php
 
 use App\Exceptions\LeadAlreadyExistsException;
+use App\Models\Lead;
 use App\Services\Lead\LeadCommandService;
 use App\Services\Lead\LeadQueryService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+    use Livewire\Attributes\On;
 
 new class extends Component
 {
@@ -24,7 +26,7 @@ new class extends Component
     public Collection $sources;
 
     public Collection $statuses;
-
+    public Lead $lead;
     public function mount(LeadQueryService $leadQueryService): void
     {
         $this->sources = $leadQueryService->getSources();
@@ -80,6 +82,19 @@ new class extends Component
 
         $this->resetValidation();
     }
+
+
+        #[On('open-lead-modal')]
+        public function open(Lead $lead)
+        {
+            $this->lead = $lead;
+            $this->firstName=$lead->first_name;
+            $this->lastName=$lead->last_name;
+            $this->email=$lead->email;
+            $this->phone=$lead->phone;
+            $this->leadSourceId=$lead->lead_source_id;
+            $this->leadStatusId=$lead->lead_status_id;
+        }
 };
 ?>
 <div>
