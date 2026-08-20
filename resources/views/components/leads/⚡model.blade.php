@@ -5,12 +5,12 @@ use App\Models\Lead;
 use App\Services\Lead\LeadCommandService;
 use App\Services\Lead\LeadQueryService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
     use Livewire\Attributes\On;
 
-new class extends Component
-{
+new class extends Component {
     public string $firstName = '';
 
     public string $lastName = '';
@@ -47,38 +47,36 @@ new class extends Component
     public function save(LeadCommandService $leadCommandService): void
     {
         $validated = $this->validate();
-
         try {
-            $leadCommandService->create($validated,Auth::id());
+            $leadCommandService->create($validated, Auth::id());
 
             $this->resetForm();
 
             $this->dispatch('lead-created');
-
         } catch (LeadAlreadyExistsException $exception) {
-            $this->addError(
-                'lead',
-                'this lead already exists'
-            );
+            $this->addError('lead', 'this lead already exists');
+        }
+    }
+    public function update(LeadCommandService $leadCommandService): void
+    {
+        $validated = $this->validate();
+        try {
+            $leadCommandService->update($validated, $this->lead->id);
+
+            $this->dispatch('lead-updated');
+        } catch (ModelNotFoundException $exception) {
+            $this->addError('lead', 'failed to update lead');
         }
     }
 
     public function close(): void
     {
         $this->resetForm();
-
     }
 
     private function resetForm(): void
     {
-        $this->reset([
-            'firstName',
-            'lastName',
-            'email',
-            'phone',
-            'leadStatusId',
-            'leadSourceId',
-        ]);
+        $this->reset(['firstName', 'lastName', 'email', 'phone', 'leadStatusId', 'leadSourceId']);
 
         $this->resetValidation();
     }
@@ -98,8 +96,8 @@ new class extends Component
 };
 ?>
 <div>
-    <div x-show="model" x-cloak x-on:lead-created.window="model = false"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div x-show="model" x-cloak x-on:lead-updated.window="model = false; mode = 'add'"
+        x-on:lead-created.window="model = false" class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-900/50" @click="$wire.close()"></div>
         <div class="relative w-full max-w-2xl rounded-xl bg-white shadow-xl" @click.stop>
             <x-leads.model.header />
@@ -112,13 +110,13 @@ new class extends Component
                     <x-leads.form.lead-source :sources="$sources" />
                     <x-leads.form.lead-status :statuses="$statuses" />
                 </div>
-              
-                    @error('lead')
-                <span class="mt-2 block text-center text-red-500">
-                    {{ $message }}
-                </span>
+
+                @error('lead')
+                    <span class="mt-2 block text-center text-red-500">
+                        {{ $message }}
+                    </span>
                 @enderror
-                  <x-leads.form.actions />
+                <x-leads.form.actions />
             </form>
         </div>
     </div>

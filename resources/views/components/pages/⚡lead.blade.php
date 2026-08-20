@@ -12,7 +12,7 @@ class extends Component
 <div x-data="{
             filterOpen: false,
             model:false,
-            viewMode:false
+            mode :'add',
         }">
     <livewire:leads.page-header />
     <livewire:leads.statistics />

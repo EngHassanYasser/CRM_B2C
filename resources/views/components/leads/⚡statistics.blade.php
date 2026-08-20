@@ -11,6 +11,8 @@ new class extends Component
     }
 
    #[On('lead-created')]
+   #[On('lead-deleted')]
+   #[On('lead-updated')]
     public function refreshStats(LeadQueryService $leadQueryService): void
     {
         $this->stats = $leadQueryService->getStats();

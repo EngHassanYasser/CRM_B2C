@@ -52,7 +52,7 @@
 
     {{-- Dropdown --}}
     <div
-        x-show="open && !viewMode"
+        x-show="open"
         x-cloak
         x-transition
         class="absolute left-0 right-0 top-full z-50 mt-1 max-h-56 overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-lg"
@@ -64,7 +64,12 @@
             class="flex w-full items-center px-3 py-2 text-left text-sm hover:bg-slate-50"
             :class="!selectedSource
                 ? 'bg-slate-50 text-indigo-600'
-                : 'text-slate-700'"
+                : 'text-slate-700'
+                  disabled:cursor-not-allowed
+               disabled:bg-slate-100
+               disabled:text-slate-400
+               disabled:border-slate-200"
+                
         >
             Select source
         </button>
@@ -73,7 +78,6 @@
         @foreach ($sources as $source)
             <button
                 type="button"
-                :disabled="viewMode"
                 @click="selectedSource = {{ $source->id }}; open = false"
                 class="flex w-full items-center px-3 py-2 text-left text-sm
                        hover:bg-slate-50

@@ -52,4 +52,16 @@ class LeadCommandService
 
         return $lead->delete();
     }
+    public function update(array $data,int $leadId) {
+        $lead = Lead::findOrFail($leadId);
+
+        return $lead->update([
+            'first_name' => $data['firstName'],
+            'last_name' => $data['lastName'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'lead_source_id' => $data['leadSourceId'],
+            'lead_status_id' => $data['leadStatusId'],
+        ]);
+    }
 }

@@ -28,7 +28,7 @@
         </svg>
     </button>
 
-    <div x-show="open" x-cloak x-transition :disabled="viewMode"
+    <div x-show="open" x-cloak x-transition :disabled="mode == 'view' "
         class="absolute left-0 right-0 top-full z-50 mt-1 max-h-56 overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-lg">
         <button type="button" @click="selectedStatus = null; open = false"
             class="flex w-full items-center px-3 py-2 text-left text-sm hover:bg-slate-50"
@@ -40,7 +40,7 @@
         </button>
 
         @foreach ($statuses as $status)
-            <button  type="butxton" @click="selectedStatus = {{ $status->id }}; open = false"
+            <button  type="button" @click="selectedStatus = {{ $status->id }}; open = false"
                 class="flex w-full items-center px-3 py-2 text-left text-sm hover:bg-slate-50"
                 :class="String(selectedStatus) === String({{ $status->id }}) ?
                     'bg-indigo-50 text-indigo-600' :
