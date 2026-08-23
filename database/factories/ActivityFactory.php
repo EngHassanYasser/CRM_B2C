@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\EnActivityType;
 use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,14 +19,9 @@ class ActivityFactory extends Factory
         return [
             'user_id' => User::factory(),
 
-            'type' => fake()->randomElement([
-                'call',
-                'email',
-                'meeting',
-                'note',
-                'message',
-            ]),
-
+            'type' => fake()->randomElement(
+                EnActivityType::cases()
+            ),
             'subject' => fake()->sentence(4),
 
             'description' => fake()->optional()->paragraph(),

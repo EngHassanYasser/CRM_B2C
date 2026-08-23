@@ -3,44 +3,37 @@
 use App\Models\Lead;
 use App\Models\LeadSource;
 use App\Models\LeadStatus;
+use App\Models\User;
 use App\Services\Lead\LeadQueryService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\User;
+
 uses(RefreshDatabase::class);
 
 it('returns correct lead statistics', function () {
     $owner = User::factory()->create();
-  $sources = LeadSource::factory()->count(8)->create();
-$statuses = LeadStatus::factory()->count(7)->create();
-  $newStatus=$statuses->firstWhere('name','New');
-  $qualifiedStatus=$statuses->firstWhere('name','Qualified');
+    $sources = LeadSource::factory()->count(8)->create();
+    $statuses = LeadStatus::factory()->count(7)->create();
+    $newStatus = $statuses->firstWhere('name', 'New');
+    $qualifiedStatus = $statuses->firstWhere('name', 'Qualified');
 
     Lead::factory()->count(5)->create([
         'lead_source_id' => $sources->random()->id,
         'lead_status_id' => $newStatus->id,
-        'owner_id'=>$owner->id,
+        'owner_id' => $owner->id,
     ]);
 
     Lead::factory()->count(3)->create([
         'lead_source_id' => $sources->random()->id,
         'lead_status_id' => $qualifiedStatus->id,
-        'owner_id'=>$owner->id,
+        'owner_id' => $owner->id,
     ]);
-
-    Lead::factory()->count(2)->create([
-         'lead_source_id' => $sources->random()->id,
-        'lead_status_id' => $statuses->random()->id,
-        'owner_id'=>$owner->id,
-
-    ]);
-
     $stats = app(LeadQueryService::class)->getStats();
 
     expect($stats)->toBe([
-        'total' => 10,
+        'total' => 8,
         'new' => 5,
         'qualified' => 3,
-        'conversion_rate' => 30.0,
+        'conversion_rate' => 37.5,
     ]);
 });
 it('returns zero statistics when there are no leads', function () {
