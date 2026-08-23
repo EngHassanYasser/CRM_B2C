@@ -24,13 +24,13 @@
             <div>
 
                 <h1 class="text-2xl font-semibold tracking-tight text-slate-900">
-                    John Doe
+                   {{ $lead->first_name .  ' ' . $lead->last_name }}
                 </h1>
 
                 <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
 
                     <span>
-                        john@example.com
+                        {{ $lead->email }}
                     </span>
 
                     <span class="hidden sm:block">
@@ -38,7 +38,7 @@
                     </span>
 
                     <span>
-                        +20 100 123 4567
+                        {{ $lead->phone }}
                     </span>
 
                 </div>
@@ -46,11 +46,11 @@
                 <div class="mt-3 flex flex-wrap gap-2">
 
                     <span class="rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700">
-                        Qualified
+                       {{ $lead->lead_status->name }}
                     </span>
 
                     <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
-                        LinkedIn
+                      {{ $lead->lead_source->name }}
                     </span>
 
                 </div>

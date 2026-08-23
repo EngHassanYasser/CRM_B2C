@@ -63,11 +63,10 @@
                     <div x-show="open" x-transition
                         class="absolute right-0 z-50 mt-2 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 text-right shadow-lg">
 
-                        <button type="button" @click="mode='view';model=open"
-                            wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"
-                            class="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                         <a wire:navigate href="{{ route('leads.viewLead', ['lead' => $lead->id]) }}"
+                            class="block text-center w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                             عرض
-                        </button>
+                        </a>
 
                         <button type="button" @click="mode='edit';model=open"
                             wire:click="$dispatch('open-lead-modal', { lead: {{ $lead }} })"

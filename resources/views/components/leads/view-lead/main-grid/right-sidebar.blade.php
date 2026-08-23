@@ -46,8 +46,7 @@
                             class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-4 border-white bg-slate-100">
 
                             <!-- Call -->
-                            <template x-if="activity.type === 'call'">
-
+                            <template x-if="activity.type === '{{ \App\Enums\EnActivityType::CALL->value }}'">
                                 <svg class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -58,8 +57,7 @@
 
 
                             <!-- Email -->
-                            <template x-if="activity.type === 'email'">
-
+                            <template x-if="activity.type === '{{ \App\Enums\EnActivityType::EMAIL->value }}'">
                                 <svg class="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -70,8 +68,7 @@
 
 
                             <!-- Meeting -->
-                            <template x-if="activity.type === 'meeting'">
-
+                            <template x-if="activity.type === '{{ \App\Enums\EnActivityType::MEETING->value }}'">
                                 <svg class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -82,8 +79,7 @@
 
 
                             <!-- Status -->
-                            <template x-if="activity.type === 'status'">
-
+                            <template x-if="activity.type === '{{ \App\Enums\EnActivityType::STATUS->value }}'">
                                 <svg class="h-4 w-4 text-orange-600" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -94,8 +90,7 @@
 
 
                             <!-- Note -->
-                            <template x-if="activity.type === 'note'">
-
+                            <template x-if="activity.type === '{{ \App\Enums\EnActivityType::NOTE->value }}'">
                                 <svg class="h-4 w-4 text-yellow-600" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

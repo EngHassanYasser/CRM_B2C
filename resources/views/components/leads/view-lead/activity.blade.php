@@ -31,21 +31,20 @@
 
             <!-- Activity Type -->
             <div>
-
                 <label class="mb-2 block text-sm font-medium text-slate-700">
                     Activity Type
                 </label>
 
-                <select
+                <select wire:model="activityType"
                     class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-200">
 
-                    <option>Call</option>
-                    <option>Email</option>
-                    <option>Meeting</option>
-                    <option>Note</option>
+                    @foreach (\App\Enums\EnActivityType::cases() as $type)
+                        <option value="{{ $type->value }}">
+                            {{ $type->label() }}
+                        </option>
+                    @endforeach
 
                 </select>
-
             </div>
 
 
@@ -56,7 +55,7 @@
                     Subject
                 </label>
 
-                <input type="text" placeholder="Activity subject"
+                <input wire:model="subject" type="text" placeholder="Activity subject"
                     class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-200">
 
             </div>
@@ -69,7 +68,7 @@
                     Description
                 </label>
 
-                <textarea rows="4" placeholder="Write activity details..."
+                <textarea wire:model="description" rows="4" placeholder="Write activity details..."
                     class="w-full resize-none rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-200"></textarea>
 
             </div>
@@ -84,7 +83,7 @@
                 Cancel
             </button>
 
-            <button type="button" @click="activityModal = false"
+            <button wire:click="addActivity" type="button" @click="activityModal = false"
                 class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
                 Add Activity
             </button>

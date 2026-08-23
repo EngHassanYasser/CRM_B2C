@@ -2,12 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['name',
+    'lead_id',
+    'owner_id',
+    'pipline_id',
+    'pipline_stage_id',
+    'value',
+    'currency',
+    'expected_clse_date',
+    'won_at',
+    'lost_at'])]
 class Deal extends Model
 {
     use HasFactory;
+
     public function lead()
     {
         return $this->belongsTo(Lead::class);

@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['name',
+    'description',
+    'is_active',
+    'is_default'])]
 class Pipeline extends Model
 {
     use HasFactory;
+
     public function stages()
     {
         return $this->hasMany(PipelineStage::class);

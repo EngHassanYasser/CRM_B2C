@@ -2,12 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Enums\EnActivityType;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+#[Fillable(['user_id',
+    'type',
+    'subject',
+    'description',
+    'occurred_at'])]
 
 class Activity extends Model
 {
     use HasFactory;
+
+    protected function casts(): array
+    {
+        return [
+            'type' => EnActivityType::class,
+        ];
+    }
+
     public function lead()
     {
         return $this->belongsTo(Lead::class);
@@ -16,5 +32,10 @@ class Activity extends Model
     public function activityable()
     {
         return $this->morphTo();
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

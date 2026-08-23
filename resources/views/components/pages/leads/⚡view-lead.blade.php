@@ -1,16 +1,62 @@
 <?php
 
+use App\Enums\EnActivityType;
 use App\Models\Lead;
-use Livewire\Component;
+use App\Services\Activity\ActivityCommandService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
-new #[Layout('components.layouts.⚡app')] 
-class extends Component {
-     public Lead $lead;
+new #[Layout('components.layouts.⚡app')]
+class extends Component
+{
+    public Lead $lead;
+
+    public EnActivityType $activityType = EnActivityType::CALL;
+
+    public string $subject = '';
+
+    public string $description = '';
 
     public function mount(Lead $lead): void
     {
+        $lead->load([
+            'lead_source',
+            'lead_status',
+            'activities.user:id,name',
+        ]);
         $this->lead = $lead;
+    }
+
+    protected function rules(): array
+    {
+
+        return [
+            'activityType' => [
+                'required',
+                new Enum(EnActivityType::class),
+            ],
+
+            'subject' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'description' => [
+                'nullable',
+                'string',
+            ],
+        ];
+    }
+
+    public function addActivity(ActivityCommandService $activityCommandService)
+    {
+        $data = $this->validate();
+        $activityCommandService->add($this->lead, $data, Auth::id());
+        $this->subject = '';
+        $this->description = '';
     }
 };
 ?>
@@ -20,52 +66,7 @@ class extends Component {
     taskModal: false,
     activityMenu: null,
 
-    activities: [{
-            id: 1,
-            type: 'call',
-            title: 'Phone Call',
-            description: 'Called John about the project requirements.',
-            date: 'Today',
-            time: '10:30 AM',
-            user: 'Ahmed Mohamed'
-        },
-        {
-            id: 2,
-            type: 'email',
-            title: 'Email Sent',
-            description: 'Sent the project proposal to John.',
-            date: 'Yesterday',
-            time: '03:20 PM',
-            user: 'Ahmed Mohamed'
-        },
-        {
-            id: 3,
-            type: 'meeting',
-            title: 'Meeting',
-            description: 'Discussed the project timeline and budget.',
-            date: 'Aug 18',
-            time: '01:00 PM',
-            user: 'Ahmed Mohamed'
-        },
-        {
-            id: 4,
-            type: 'status',
-            title: 'Status Changed',
-            description: 'Lead status changed from Contacted to Qualified.',
-            date: 'Aug 17',
-            time: '11:15 AM',
-            user: 'Ahmed Mohamed'
-        },
-        {
-            id: 5,
-            type: 'note',
-            title: 'Note Added',
-            description: 'John is interested in Laravel development.',
-            date: 'Aug 16',
-            time: '09:40 AM',
-            user: 'Ahmed Mohamed'
-        }
-    ],
+    activities: @js($lead->activities),
 
     tasks: [{
             id: 1,
@@ -91,7 +92,7 @@ class extends Component {
     ]
 }" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
-    <x-leads.view-lead.header />
+    <x-leads.view-lead.header :$lead/>
     <x-leads.view-lead.pipline />
     <x-leads.view-lead.main-grid />
     <x-leads.view-lead.activity />

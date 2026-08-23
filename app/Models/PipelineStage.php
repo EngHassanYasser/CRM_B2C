@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['pipline_id',
+    'sort_order',
+    'probability',
+    'is_closed',
+    'is_won'])]
 class PipelineStage extends Model
 {
     use HasFactory;
