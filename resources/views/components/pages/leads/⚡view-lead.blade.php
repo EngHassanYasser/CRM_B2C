@@ -19,14 +19,18 @@ class extends Component
 
     public string $description = '';
 
-    public function mount(Lead $lead): void
+    public function render()
     {
-        $lead->load([
+        $this->lead->load([
             'lead_source',
             'lead_status',
-            'activities.user:id,name',
+            'activities' => fn ($query) => $query
+                ->with('user:id,name')
+                ->latest('occurred_at')
+                ->limit(10),
         ]);
-        $this->lead = $lead;
+
+        return $this->view();
     }
 
     protected function rules(): array
@@ -65,9 +69,6 @@ class extends Component
     activityModal: false,
     taskModal: false,
     activityMenu: null,
-
-    activities: @js($lead->activities),
-
     tasks: [{
             id: 1,
             title: 'Follow up with John',
@@ -93,9 +94,9 @@ class extends Component
 }" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
     <x-leads.view-lead.header :$lead/>
-    <x-leads.view-lead.pipline />
-    <x-leads.view-lead.main-grid />
-    <x-leads.view-lead.activity />
-    <x-leads.view-lead.task />
-    <x-leads.view-lead.deal />
+    <x-leads.view-lead.pipline :$lead/>
+    <x-leads.view-lead.main-grid :$lead/>
+    <x-leads.view-lead.activity :$lead/>
+    <x-leads.view-lead.task :$lead/>
+    <x-leads.view-lead.deal :$lead/>
 </div>
