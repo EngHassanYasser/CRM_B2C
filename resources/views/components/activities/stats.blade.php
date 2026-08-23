@@ -1,13 +1,3 @@
-<?php
-
-use Livewire\Component;
-
-new class extends Component
-{
-    //
-};
-?>
-
 {{-- =====================================================
 STATISTICS
 ====================================================== --}}
@@ -25,7 +15,7 @@ STATISTICS
         </p>
 
         <p class="mt-2 text-2xl font-bold text-slate-900">
-            248
+            {{ $stats['total'] }}
         </p>
 
         <p class="mt-2 text-xs text-emerald-600">
@@ -49,12 +39,13 @@ STATISTICS
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    86
+                   {{ $stats['calls'] }}
                 </p>
 
             </div>
 
-            <div class="flex h-10 w-10 items-center
+            <div
+                class="flex h-10 w-10 items-center
                            justify-center rounded-lg
                            bg-blue-50 text-blue-600">
 
@@ -84,12 +75,13 @@ STATISTICS
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    42
+                  {{ $stats['meetings'] }}
                 </p>
 
             </div>
 
-            <div class="flex h-10 w-10 items-center
+            <div
+                class="flex h-10 w-10 items-center
                            justify-center rounded-lg
                            bg-violet-50 text-violet-600">
 
@@ -119,12 +111,13 @@ STATISTICS
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    120
+                 {{ $stats['emails'] }}
                 </p>
 
             </div>
 
-            <div class="flex h-10 w-10 items-center
+            <div
+                class="flex h-10 w-10 items-center
                            justify-center rounded-lg
                            bg-emerald-50 text-emerald-600">
 

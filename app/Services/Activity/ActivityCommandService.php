@@ -3,6 +3,7 @@
 namespace App\Services\Activity;
 
 use App\Models\Lead;
+use Illuminate\Support\Facades\Cache;
 
 class ActivityCommandService
 {
