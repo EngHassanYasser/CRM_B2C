@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'type',
     'subject',
     'description',
-    'occurred_at'])]
+    'occurred_at',
+    'status'])]
 
 class Activity extends Model
 {

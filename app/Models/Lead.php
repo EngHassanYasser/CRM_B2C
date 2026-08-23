@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[Fillable([
     'first_name',
     'last_name',
@@ -17,6 +20,14 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     use HasFactory;
+
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => trim("{$this->first_name} {$this->last_name}"),
+        );
+    }
+
     public function lead_source()
     {
         return $this->belongsTo(LeadSource::class);
@@ -52,9 +63,10 @@ class Lead extends Model
         return $this->morphMany(Note::class, 'notable');
     }
 
-   public function latestActivity()
+    public function latestActivity()
     {
 
-    return $this->morphOne(Activity::class, 'activityable')
-        ->latestOfMany('created_at');    }
+        return $this->morphOne(Activity::class, 'activityable')
+            ->latestOfMany('created_at');
+    }
 }
