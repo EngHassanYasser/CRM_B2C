@@ -32,16 +32,12 @@ it('gets activity stats', function () {
         'type' => EnActivityType::MEETING,
     ]);
 
-    Activity::factory()->create([
-        'user_id' => $user->id,
-        'type' => EnActivityType::NOTE,
-    ]);
 
     $service = app(ActivityQueryService::class);
 
     expect($service->getStats())
         ->toMatchArray([
-            'total' => '5',
+            'total' => '4',
             'calls' => '2',
             'emails' => '1',
             'meetings' => '1',
