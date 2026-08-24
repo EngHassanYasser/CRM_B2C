@@ -74,4 +74,9 @@ class ActivityQueryService
             ->latest('occurred_at')
             ->paginate(10);
     }
+
+    public function findById(int $id)
+    {
+        return Activity::findOrFail($id);
+    }
 }

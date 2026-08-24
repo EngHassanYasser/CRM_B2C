@@ -2,8 +2,8 @@
 
 namespace App\Services\Activity;
 
+use App\Models\Activity;
 use App\Models\Lead;
-use Illuminate\Support\Facades\Cache;
 
 class ActivityCommandService
 {
@@ -18,7 +18,18 @@ class ActivityCommandService
         ]);
     }
 
-    public function update(array $data, int $activityId) {}
+    public function update(array $data, $id)
+    {
+        $activity = Activity::find($id);
+
+        return $activity->update([
+            'subject' => $data['subject'],
+            'description' => $data['description'],
+            'type' => $data['type']->value,
+            'occurred_at'=>$data['occurredAt'],
+            'status' => $data['status']->value,
+        ]);
+    }
 
     public function deleteById(int $activityId) {}
 }

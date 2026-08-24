@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\EnActivityStatus;
 use App\Enums\EnActivityType;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['user_id',
     'type',
@@ -19,6 +21,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Activity extends Model
 {
     use HasFactory;
+      use SoftDeletes;
+
+    protected $casts = [
+        'occurred_at' => 'datetime',
+    ];
 
     protected function formattedCreatedAt(): Attribute
     {
@@ -37,6 +44,7 @@ class Activity extends Model
     {
         return [
             'type' => EnActivityType::class,
+            'status'=>EnActivityStatus::class,
         ];
     }
 
