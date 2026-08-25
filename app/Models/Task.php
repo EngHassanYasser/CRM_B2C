@@ -6,8 +6,14 @@ use App\Enums\EnTaskStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-#[Fillable(['assigned_to', 'title', 'description', 'priority', 'status', 'due_at', 'completed_at'])]
+#[Fillable(['assigned_to',
+    'title', 'description',
+    'priority', 'status',
+    'due_at', 'completed_at',
+    'taskable_type',
+    'taskable_id'])]
 class Task extends Model
 {
     use HasFactory;
@@ -19,13 +25,13 @@ class Task extends Model
         ];
     }
 
+    public function taskable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
     public function assignee()
     {
         return $this->belongsTo(User::class, 'assigned_to');
-    }
-
-    public function taskable()
-    {
-        return $this->morphTo();
     }
 }

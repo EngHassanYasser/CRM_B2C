@@ -25,22 +25,4 @@
         </p>
 
     </div>
-
-
-    <button type="button"
-        class="inline-flex h-10 items-center justify-center
-                   gap-2 rounded-lg bg-indigo-600 px-4
-                   text-sm font-semibold text-white
-                   shadow-sm transition hover:bg-indigo-700
-                   focus:outline-none focus:ring-2
-                   focus:ring-indigo-500 focus:ring-offset-2">
-
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-
-        Add Task
-
-    </button>
-
 </div>

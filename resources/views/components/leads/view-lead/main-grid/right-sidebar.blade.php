@@ -203,7 +203,7 @@
             </div>
 
 
-            <button type="button" @click="taskModal = true"
+            <button type="button" @click="taskModel = true"
                 class="text-sm font-medium text-blue-600 hover:text-blue-700">
                 + Add Task
             </button>

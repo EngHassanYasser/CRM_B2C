@@ -14,7 +14,8 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Contracts\PasskeyUser;
 use Laravel\Fortify\PasskeyAuthenticatable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-
+use App\Models\Task;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $name
@@ -51,6 +52,11 @@ class User extends Authenticatable implements PasskeyUser
     /**
      * Get the user's initials
      */
+    public function assignedTasks(): HasMany
+    {
+        return $this->hasMany(Task::class, 'assigned_to');
+    }
+
     public function initials(): string
     {
         $initials = Str::initials($this->name, true);
@@ -68,11 +74,6 @@ class User extends Authenticatable implements PasskeyUser
     public function deals()
     {
         return $this->hasMany(Deal::class, 'owner_id');
-    }
-
-    public function assignedTasks()
-    {
-        return $this->hasMany(Task::class, 'assigned_to');
     }
 
     public function activities()

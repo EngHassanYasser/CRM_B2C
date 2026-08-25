@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 #[Fillable([
     'first_name',
@@ -26,6 +27,12 @@ class Lead extends Model
         return Attribute::make(
             get: fn () => trim("{$this->first_name} {$this->last_name}"),
         );
+    }
+    
+
+    public function tasks(): MorphMany
+    {
+        return $this->morphMany(Task::class, 'taskable');
     }
 
     public function lead_source()
@@ -51,11 +58,6 @@ class Lead extends Model
     public function activities()
     {
         return $this->morphMany(Activity::class, 'activityable');
-    }
-
-    public function tasks()
-    {
-        return $this->morphMany(Task::class, 'taskable');
     }
 
     public function notes()
