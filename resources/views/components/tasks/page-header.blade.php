@@ -1,12 +1,3 @@
-<?php
-
-use Livewire\Component;
-
-new class extends Component
-{
-    //
-};
-?>
 <div class="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
 
     <div>
@@ -36,7 +27,8 @@ new class extends Component
     </div>
 
 
-    <button type="button" class="inline-flex h-10 items-center justify-center
+    <button type="button"
+        class="inline-flex h-10 items-center justify-center
                    gap-2 rounded-lg bg-indigo-600 px-4
                    text-sm font-semibold text-white
                    shadow-sm transition hover:bg-indigo-700

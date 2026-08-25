@@ -1,17 +1,5 @@
-<?php
-
-use Livewire\Component;
-
-new class extends Component
-{
-    //
-};
-?>
-{{-- =====================================================
-PAGINATION
-====================================================== --}}
-
-<div class="flex flex-col gap-3 border-t
+<div
+    class="flex flex-col gap-3 border-t
                    border-slate-200 px-4 py-4
                    sm:flex-row sm:items-center
                    sm:justify-between">
@@ -42,7 +30,8 @@ PAGINATION
 
     <div class="flex items-center gap-1">
 
-        <button type="button" class="rounded-lg border
+        <button type="button"
+            class="rounded-lg border
                            border-slate-200
                            px-3 py-2 text-sm
                            text-slate-400">
@@ -50,14 +39,16 @@ PAGINATION
         </button>
 
 
-        <button type="button" class="rounded-lg bg-indigo-600
+        <button type="button"
+            class="rounded-lg bg-indigo-600
                            px-3 py-2 text-sm
                            font-medium text-white">
             1
         </button>
 
 
-        <button type="button" class="rounded-lg border
+        <button type="button"
+            class="rounded-lg border
                            border-slate-200
                            px-3 py-2 text-sm
                            text-slate-600
@@ -66,7 +57,8 @@ PAGINATION
         </button>
 
 
-        <button type="button" class="rounded-lg border
+        <button type="button"
+            class="rounded-lg border
                            border-slate-200
                            px-3 py-2 text-sm
                            text-slate-600
@@ -75,7 +67,8 @@ PAGINATION
         </button>
 
 
-        <button type="button" class="rounded-lg border
+        <button type="button"
+            class="rounded-lg border
                            border-slate-200
                            px-3 py-2 text-sm
                            text-slate-600

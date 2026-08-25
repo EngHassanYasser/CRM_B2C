@@ -1,12 +1,3 @@
-<?php
-
-use Livewire\Component;
-
-new class extends Component
-{
-    //
-};
-?>
 <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
 
@@ -24,7 +15,7 @@ new class extends Component
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    86
+                  {{ $stats['total'] }}
                 </p>
 
                 <p class="mt-2 text-xs text-slate-500">
@@ -34,7 +25,8 @@ new class extends Component
             </div>
 
 
-            <div class="flex h-10 w-10 items-center
+            <div
+                class="flex h-10 w-10 items-center
                            justify-center rounded-lg
                            bg-indigo-50 text-indigo-600">
 
@@ -64,7 +56,7 @@ new class extends Component
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    32
+                   {{ $stats['pending'] }}
                 </p>
 
                 <p class="mt-2 text-xs text-amber-600">
@@ -74,7 +66,8 @@ new class extends Component
             </div>
 
 
-            <div class="flex h-10 w-10 items-center
+            <div
+                class="flex h-10 w-10 items-center
                            justify-center rounded-lg
                            bg-amber-50 text-amber-600">
 
@@ -104,7 +97,7 @@ new class extends Component
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    9
+                 {{ $stats['today'] }}
                 </p>
 
                 <p class="mt-2 text-xs text-rose-600">
@@ -114,7 +107,8 @@ new class extends Component
             </div>
 
 
-            <div class="flex h-10 w-10 items-center
+            <div
+                class="flex h-10 w-10 items-center
                            justify-center rounded-lg
                            bg-rose-50 text-rose-600">
 
@@ -144,7 +138,7 @@ new class extends Component
                 </p>
 
                 <p class="mt-2 text-2xl font-bold text-slate-900">
-                    45
+                   {{ $stats['completed'] }}
                 </p>
 
                 <p class="mt-2 text-xs text-emerald-600">
@@ -154,7 +148,8 @@ new class extends Component
             </div>
 
 
-            <div class="flex h-10 w-10 items-center
+            <div
+                class="flex h-10 w-10 items-center
                            justify-center rounded-lg
                            bg-emerald-50 text-emerald-600">
 
