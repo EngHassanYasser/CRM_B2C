@@ -20,7 +20,6 @@ class TaskCommandService
     public function Create(array $data): Task
     {
         return Auth::user()->assignedTasks()->create([
-            'assigned_to' => $data['assigned_to'],
             'title' => $data['title'],
             'description' => $data['description'],
             'priority' => $data['priority'],

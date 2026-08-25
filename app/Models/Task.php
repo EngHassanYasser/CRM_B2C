@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EnTaskPriority;
 use App\Enums\EnTaskStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,7 @@ class Task extends Model
     {
         return [
             'status' => EnTaskStatus::class,
+            'priority'=>EnTaskPriority::class
         ];
     }
 
