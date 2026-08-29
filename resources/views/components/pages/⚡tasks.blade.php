@@ -1,17 +1,23 @@
 <?php
 
-
+use App\Services\Task\TaskQueryService;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use App\Services\Task\TaskQueryService;
 
 new #[Layout('components.layouts.⚡app')] class extends Component
 {
-   public array $stats = [];
+    public array $stats = [];
 
     public function mount(TaskQueryService $taskQueyrService)
     {
         $this->stats = $taskQueyrService->getstats();
+    }
+
+    public function render(TaskQueryService $taskQueyrService)
+    {
+        return $this->view([
+            'tasks' => $taskQueyrService->getAll(),
+        ]);
     }
 };
 
@@ -26,7 +32,7 @@ new #[Layout('components.layouts.⚡app')] class extends Component
                border border-slate-200
                bg-white shadow-sm">
         <x-tasks.toolbar />
-        <livewire:tasks.table />
+        <x-tasks.table :$tasks/>
     </div>
     <x-tasks.pagination />
 </div>

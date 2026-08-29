@@ -1,11 +1,3 @@
-<?php
-
-use Livewire\Component;
-
-new class extends Component {
-    //
-};
-?>
 <div class="overflow-x-auto">
 
     <table class="min-w-full divide-y
@@ -67,7 +59,7 @@ new class extends Component {
             </tr>
 
         </thead>
-        
+
         <tbody class="divide-y divide-slate-100">
 
 
@@ -196,3 +188,4 @@ new class extends Component {
             </tr>
         </tbody>
     </table>
+</div>

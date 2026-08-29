@@ -76,4 +76,16 @@ class TaskQueryService
             }
         );
     }
+
+    public function getAll()
+    {
+        return Task::select(['id',
+                        'title',
+                        'description',
+                        'taskable_id',
+                        'taskable_type',
+                        'status',
+                        'assigned_to',
+                        'due_at','priority'])->paginate();
+    }
 }
