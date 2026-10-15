@@ -17,16 +17,19 @@ class TaskCommandService
         ]);
     }
 
-    public function Create(array $data): Task
+    public function create(array $data, ?User $assignedTo = null): Task
     {
-        return Auth::user()->assignedTasks()->create([
+        $assignedTo ??= Auth::user();
+        
+        return Task::create([
+            'assigned_to' => $assignedTo->id,
             'title' => $data['title'],
             'description' => $data['description'],
             'priority' => $data['priority'],
             'status' => $data['status'],
             'due_at' => $data['due_at'],
-            'taskable_type' => User::class,
-            'taskable_id' => Auth::id(),
+            'taskable_type' => $data['taskable_type'],
+            'taskable_id' => $data['taskable_id'],
         ]);
     }
 }

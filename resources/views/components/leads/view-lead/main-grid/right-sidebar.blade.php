@@ -24,7 +24,6 @@
             + Activity
         </button>
     </div>
-
     <div class="p-5">
         <div class="relative">
 

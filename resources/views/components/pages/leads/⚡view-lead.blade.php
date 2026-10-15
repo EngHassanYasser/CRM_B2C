@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\EnActivityType;
+use App\Enums\EnMode;
 use App\Enums\EnTaskPriority;
 use App\Enums\EnTaskStatus;
 use App\Models\Lead;
@@ -16,21 +17,23 @@ use Livewire\Component;
 
 new #[Layout('components.layouts.⚡app')] class extends Component
 {
-    public ?int $taskId = null;
+    public ?int $task_id = null;
+
+    public EnMode $mode = EnMode::CREATE;
 
     public string $title = '';
 
-    public ?string $Taskdescription = null;
+    public ?string $Task_description = null;
 
-    public string $priority = 'normal';
+    public EnTaskPriority $priority = EnTaskPriority::NORMAL;
 
-    public string $status = 'pending';
+    public EnTaskStatus $status = EnTaskStatus::PENDING;
 
     public ?string $due_at = null;
 
-    public ?int $assigned_to = null;
+    public string $taskable_type;
 
-    public string $mode = 'create';
+    public int $taskable_id;
 
     protected $listeners = [
         'open-create-task-modal' => 'openCreate',
@@ -41,16 +44,15 @@ new #[Layout('components.layouts.⚡app')] class extends Component
     {
         $task = Task::findOrFail($taskId);
 
-        $this->taskId = $task->id;
+        $this->task_id = $task->id;
         $this->title = $task->title;
         $this->description = $task->description;
         $this->priority = $task->priority;
         $this->status = $task->status;
         $this->due_at = $task->due_at?->format('Y-m-d\TH:i');
-        $this->assigned_to = $task->assigned_to;
     }
 
-    public function addTask(TaskCommandService $taskCommandService): void
+    public function save(TaskCommandService $taskCommandService): void
     {
         $validated = $this->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -63,9 +65,15 @@ new #[Layout('components.layouts.⚡app')] class extends Component
 
             'due_at' => ['nullable', 'date'],
 
-            'assigned_to' => ['required', 'integer', 'exists:users,id'],
+            'taskable_type' => ['required', 'string'],
+            'taskable_id' => ['required', 'integer'],
         ]);
-        $taskCommandService->Create($validated);
+
+        if ($this->mode == EnMode::CREATE) {
+            $taskCommandService->Create($validated);
+        } else {
+            $taskCommandService->update($validated, $this->taskId);
+        }
     }
 
     public function close(): void
@@ -77,16 +85,16 @@ new #[Layout('components.layouts.⚡app')] class extends Component
     {
         $this->reset(['taskId', 'title', 'description', 'due_at', 'assigned_to', 'taskable_type', 'taskable_id']);
 
-        $this->priority = 'normal';
-        $this->status = 'pending';
-        $this->mode = 'create';
+        $this->priority =EnTaskPriority::NORMAL;
+        $this->status = EnTaskStatus::PENDING;
+        $this->mode = EnMode::CREATE;
 
         $this->resetValidation();
     }
 
     public function render()
     {
-        $this->lead->load(['lead_source', 'lead_status', 'activities' => fn ($query) => $query->with('user:id,name')->latest('occurred_at')->limit(10)]);
+        $this->lead->load(['lead_source', 'lead_status', 'activities.User','tasks'=> fn ($query) => $query->with('user:id,name')->latest('created_at')->limit(10)]);
 
         return $this->view([
             'users' => User::query()->select('id', 'name')->orderBy('name')->get(),
@@ -133,28 +141,6 @@ new #[Layout('components.layouts.⚡app')] class extends Component
     activityMenu: null,
     taskModel: false,
     taskMode: 'add',
-    tasks: [{
-            id: 1,
-            title: 'Follow up with John',
-            description: 'Follow up regarding the proposal.',
-            due: 'Tomorrow · 02:00 PM',
-            status: 'pending'
-        },
-        {
-            id: 2,
-            title: 'Send final proposal',
-            description: 'Send the updated project proposal.',
-            due: 'Aug 22 · 10:00 AM',
-            status: 'pending'
-        },
-        {
-            id: 3,
-            title: 'Initial call',
-            description: 'Complete initial discovery call.',
-            due: 'Aug 18 · 11:00 AM',
-            status: 'completed'
-        }
-    ]
 }" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
     <x-leads.view-lead.header :$lead />
